@@ -33,6 +33,8 @@ yarn-error.log*
 next-env.d.ts
 
 # Backup files (Astro remnants)
+.astro/
+astro_backup/
 src/components_backup/
 src/layouts_backup/
 src/pages_backup/
