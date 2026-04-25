@@ -1,0 +1,30 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Hero from '@/components/Hero.astro';
+import Projects from '@/components/Projects.astro';
+import Skills from '@/components/Skills.astro';
+import About from '@/components/About.astro';
+import Contact from '@/components/Contact.astro';
+import Footer from '@/components/Footer.astro';
+import ScrollProgress from '@/components/ScrollProgress';
+import BackToTop from '@/components/BackToTop';
+---
+
+<Layout title="Fauzan Ashril Hakiim — Creative Developer & Designer">
+  <ScrollProgress client:load />
+  <Header />
+  <main>
+    <Hero />
+    <div class="container"><hr class="line-draw border-0 h-px bg-border" /></div>
+    <Projects />
+    <div class="container"><hr class="line-draw border-0 h-px bg-border" /></div>
+    <Skills />
+    <div class="container"><hr class="line-draw border-0 h-px bg-border" /></div>
+    <About />
+    <div class="container"><hr class="line-draw border-0 h-px bg-border" /></div>
+    <Contact />
+  </main>
+  <Footer />
+  <BackToTop client:load />
+</Layout>

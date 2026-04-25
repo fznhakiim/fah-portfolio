@@ -1,0 +1,322 @@
+---
+
+---
+
+<section
+    id="hero"
+    class="relative min-h-screen flex items-center justify-center overflow-hidden"
+>
+    <!-- Noise texture overlay -->
+    <div
+        class="absolute inset-0 opacity-[0.015]"
+        style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');"
+    >
+    </div>
+
+    <!-- Subtle grid -->
+    <div
+        class="absolute inset-0 bg-[linear-gradient(hsl(var(--muted-foreground)/0.04)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--muted-foreground)/0.04)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_65%)]"
+    >
+    </div>
+
+    <!-- Accent glow -->
+    <div
+        class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[radial-gradient(ellipse,hsl(var(--clr-accent)/0.06)_0%,transparent_70%)] pointer-events-none blur-3xl"
+    >
+    </div>
+
+    <div class="hero-inner container relative z-10 pt-24 pb-32">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 max-w-[680px]">
+                <!-- Badge -->
+                <div
+                    class="hero-reveal inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-border bg-card/60 backdrop-blur-sm text-xs font-medium text-muted-foreground mb-10"
+                    style="animation-delay: 0ms"
+                >
+                    <span
+                        class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot shadow-[0_0_6px_hsl(var(--clr-accent)/0.5)]"
+                    ></span>
+                    Available for work
+                </div>
+
+                <!-- Title -->
+                <h1
+                    class="text-[clamp(2.8rem,6vw,4.2rem)] font-extrabold tracking-[-0.035em] leading-[1.08] mb-7"
+                >
+                    <span
+                        class="hero-reveal block"
+                        style="animation-delay: 150ms"
+                    >
+                        Fauzan Ashril
+                    </span>
+                    <span
+                        class="hero-reveal block text-accent"
+                        style="animation-delay: 300ms"
+                    >
+                        Hakiim
+                    </span>
+                </h1>
+
+                <!-- Role -->
+                <p
+                    class="hero-reveal text-lg font-medium text-muted-foreground/80 mb-4"
+                    style="animation-delay: 450ms"
+                >
+                    Creative Developer & Designer
+                </p>
+
+                <!-- Subtitle -->
+                <p
+                    class="hero-reveal text-[1.05rem] text-muted-foreground/60 max-w-[480px] leading-[1.75] mb-12"
+                    style="animation-delay: 550ms"
+                >
+                    Building thoughtful digital experiences with clean code,
+                    refined design, and attention to the details that make
+                    things feel right.
+                </p>
+
+                <!-- CTAs -->
+                <div
+                    class="hero-reveal flex items-center gap-4 flex-wrap"
+                    style="animation-delay: 700ms"
+                >
+                    <a
+                        href="#projects"
+                        class="group inline-flex items-center gap-2.5 h-11 px-6 rounded-lg text-sm font-medium bg-foreground text-background transition-all duration-300 hover:shadow-lg hover:shadow-foreground/10 hover:-translate-y-[1px] active:translate-y-0"
+                    >
+                        View Work
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><line x1="5" y1="12" x2="19" y2="12"
+                            ></line><polyline points="12 5 19 12 12 19"
+                            ></polyline></svg
+                        >
+                    </a>
+                    <a
+                        href="#contact"
+                        class="inline-flex items-center gap-2 h-11 px-6 rounded-lg text-sm font-medium border border-border text-muted-foreground transition-all duration-300 hover:text-foreground hover:border-foreground/20 hover:-translate-y-[1px]"
+                    >
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Photo Stack Container -->
+            <div
+                class="lg:col-span-5 hidden lg:block hero-reveal"
+                style="animation-delay: 850ms"
+            >
+                <div
+                    id="hero-image-container"
+                    class="relative h-[500px] w-full flex items-center justify-center"
+                >
+                    <!-- Decorative Background Glow -->
+                    <div
+                        class="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--clr-accent)/0.15),transparent_70%)] blur-3xl scale-150"
+                    >
+                    </div>
+
+                    <!-- Photo 1: Back -->
+                    <div
+                        id="photo-0"
+                        class="photo-card absolute w-[280px] aspect-[3/4] rounded-3xl overflow-hidden border border-border/50 shadow-2xl transition-all duration-700 ease-out-expo z-10 opacity-60 scale-90"
+                        data-depth="0.2"
+                    >
+                        <img
+                            src="/images/user-2.jpeg"
+                            alt="User Batik"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-background/20"></div>
+                    </div>
+
+                    <!-- Photo 2: Middle -->
+                    <div
+                        id="photo-1"
+                        class="photo-card absolute w-[280px] aspect-[3/4] rounded-3xl overflow-hidden border border-border/50 shadow-2xl transition-all duration-700 ease-out-expo z-20 opacity-80 scale-95"
+                        data-depth="0.4"
+                    >
+                        <img
+                            src="/images/user-3.jpeg"
+                            alt="User Blue Shirt"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-background/10"></div>
+                    </div>
+
+                    <!-- Photo 3: Front -->
+                    <div
+                        id="photo-2"
+                        class="photo-card absolute w-[280px] aspect-[3/4] rounded-3xl overflow-hidden border border-border/80 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] transition-all duration-700 ease-out-expo z-30 opacity-100 scale-100"
+                        data-depth="0.6"
+                    >
+                        <img
+                            src="/images/user-1.jpeg"
+                            alt="User Suit"
+                            class="w-full h-full object-cover"
+                        />
+                        <div
+                            class="absolute inset-0 ring-1 ring-inset ring-white/10"
+                        >
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge -->
+                    <div
+                        class="parallax-badge absolute bottom-12 -left-4 z-[60] px-4 py-2 bg-background/80 backdrop-blur-md rounded-lg border border-border shadow-xl -rotate-3"
+                        data-depth="0.8"
+                    >
+                        <p
+                            class="text-[10px] font-bold uppercase tracking-widest text-accent"
+                        >
+                            Creative Dev
+                        </p>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <div
+                        class="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-50"
+                    >
+                        <button
+                            id="prev-photo"
+                            class="p-3 rounded-full bg-background/80 backdrop-blur-md border border-border shadow-lg hover:bg-accent hover:text-white transition-all active:scale-95"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><path d="m15 18-6-6 6-6"></path></svg
+                            >
+                        </button>
+                        <button
+                            id="next-photo"
+                            class="p-3 rounded-full bg-background/80 backdrop-blur-md border border-border shadow-lg hover:bg-accent hover:text-white transition-all active:scale-95"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><path d="m9 18 6-6-6-6"></path></svg
+                            >
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const container = document.getElementById("hero-image-container");
+    const photos = document.querySelectorAll(".photo-card");
+    const badge = document.querySelector(".parallax-badge");
+    const prevBtn = document.getElementById("prev-photo");
+    const nextBtn = document.getElementById("next-photo");
+
+    let currentIndex = 2;
+
+    if (container) {
+        const updateStack = (newIndex: number, direction: "next" | "prev") => {
+            photos.forEach((photo, i) => {
+                const p = photo as HTMLElement;
+                if (i === newIndex) {
+                    p.style.zIndex = "40";
+                    p.style.opacity = "1";
+                    p.style.transform = `translate3d(${direction === "next" ? "50px" : "-50px"}, 0, 0) scale(1.05)`;
+                    setTimeout(() => {
+                        p.style.transform = "translate3d(0, 0, 0) scale(1)";
+                    }, 50);
+                } else if (i === (newIndex - 1 + 3) % 3) {
+                    p.style.zIndex = "20";
+                    p.style.opacity = "0.7";
+                    p.style.transform = "translate3d(0, 0, 0) scale(0.95)";
+                } else {
+                    p.style.zIndex = "10";
+                    p.style.opacity = "0.4";
+                    p.style.transform = "translate3d(0, 0, 0) scale(0.9)";
+                }
+            });
+        };
+
+        nextBtn?.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % 3;
+            updateStack(currentIndex, "next");
+        });
+
+        prevBtn?.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + 3) % 3;
+            updateStack(currentIndex, "prev");
+        });
+
+        // Refined Parallax for both Photos and Badge
+        window.addEventListener("mousemove", (e) => {
+            const { clientX, clientY } = e;
+            const moveX = (clientX - window.innerWidth / 2) / 30;
+            const moveY = (clientY - window.innerHeight / 2) / 30;
+
+            // Handle Photos
+            photos.forEach((photo) => {
+                const p = photo as HTMLElement;
+                const depth = parseFloat(p.dataset.depth || "0.1");
+                const currentTransform = p.style.transform;
+                if (!currentTransform.includes("50px")) {
+                    const baseScale =
+                        p.style.zIndex === "40"
+                            ? 1
+                            : p.style.zIndex === "20"
+                              ? 0.95
+                              : 0.9;
+                    p.style.transform = `translate3d(${moveX * depth}px, ${moveY * depth}px, 0) scale(${baseScale})`;
+                }
+            });
+
+            // Handle Badge independently
+            if (badge) {
+                const b = badge as HTMLElement;
+                const depth = parseFloat(b.dataset.depth || "0.8");
+                b.style.transform = `translate3d(${moveX * depth}px, ${moveY * depth}px, 0) rotate(-3deg)`;
+            }
+        });
+    }
+</script>
+
+<style>
+    .hero-reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(6px);
+        animation: heroReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes heroReveal {
+        0% {
+            opacity: 0;
+            transform: translateY(24px);
+            filter: blur(6px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+</style>

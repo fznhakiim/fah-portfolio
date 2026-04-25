@@ -1,0 +1,70 @@
+---
+import { skillCategories } from '@/data/portfolio';
+---
+
+<section id="skills" class="py-28">
+  <div class="container">
+    <div class="mb-14">
+      <span class="reveal-up block text-xs font-semibold uppercase tracking-[0.12em] text-accent mb-4">
+        Stack
+      </span>
+      <h2 class="reveal-up delay-1 text-[clamp(1.8rem,4vw,2.5rem)] font-bold tracking-[-0.025em] leading-tight mb-4">
+        Tools & Technologies
+      </h2>
+      <p class="reveal-up delay-2 text-muted-foreground max-w-[420px] leading-relaxed">
+        Modern tools I use to build scalable and performant applications.
+      </p>
+    </div>
+
+    <div class="space-y-12">
+      {skillCategories?.map((category, catIdx) => (
+        <div class={`reveal-up delay-${Math.min(catIdx + 1, 3)}`}>
+          <h3 class="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/50 mb-6 flex items-center gap-4">
+            {category.title}
+            <div class="h-px flex-1 bg-border/50"></div>
+          </h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {category.skills?.map((skill) => (
+              <div class="group relative flex flex-col items-center justify-center p-6 rounded-xl border border-border bg-card transition-all duration-500 ease-out-expo hover:border-accent hover:shadow-accent hover:-translate-y-1">
+                {/* Icon Container */}
+                <div class="relative w-10 h-10 mb-4 flex items-center justify-center">
+                  {/* Decorative background glow */}
+                  <div class="absolute inset-0 bg-accent/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {skill.icon ? (
+                    <img 
+                      src={`https://cdn.simpleicons.org/${skill.icon}/ececec`} 
+                      alt={skill.name}
+                      loading="lazy"
+                      className="w-full h-full object-contain filter transition-all duration-500 group-hover:scale-110 group-hover:filter-none dark:brightness-200 dark:group-hover:brightness-100"
+                      style={`--icon-color: #ececec;`}
+                    />
+                  ) : (
+                    <div class="w-full h-full bg-muted rounded-md animate-pulse"></div>
+                  )}
+                </div>
+                
+                <span class="text-xs font-medium text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                  {skill.name}
+                </span>
+
+                {/* Subtle outer glow on hover */}
+                <div class="absolute -inset-[1px] rounded-xl bg-gradient-to-br from-accent/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Custom filter for dark mode logos consistency */
+  .dark img {
+    filter: brightness(0) invert(0.9);
+  }
+  .dark .group:hover img {
+    filter: none;
+  }
+</style>
