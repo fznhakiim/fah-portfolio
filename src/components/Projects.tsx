@@ -2,12 +2,20 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/portfolio";
-import { Lock } from "lucide-react";
+import { ChevronLeft, ChevronRight, Lock } from "lucide-react";
 import { FaGithub, FaArrowRight, FaFigma } from "react-icons/fa6";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 function ImageSlider({ images, title, isPortrait = false }: { images: string[]; title: string, isPortrait?: boolean }) {
   const [index, setIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const next = () => {
     setIndex((prev) => (prev + 1) % images.length);
@@ -23,7 +31,7 @@ function ImageSlider({ images, title, isPortrait = false }: { images: string[]; 
   };
 
   return (
-    <div className={`relative w-full h-full group/slider overflow-hidden cursor-grab active:cursor-grabbing ${isPortrait ? 'bg-slate-50' : ''}`}>
+    <div className={`relative w-full h-full group/slider overflow-hidden ${isMobile ? 'cursor-grab active:cursor-grabbing' : ''} ${isPortrait ? 'bg-slate-50' : ''}`}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.img
           key={index}
@@ -36,10 +44,11 @@ function ImageSlider({ images, title, isPortrait = false }: { images: string[]; 
             x: { type: "spring", stiffness: 300, damping: 30 },
             opacity: { duration: 0.2 }
           }}
-          drag="x"
+          drag={isMobile ? "x" : false}
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={1}
           onDragEnd={(e, { offset, velocity }) => {
+            if (!isMobile) return;
             const swipe = swipePower(offset.x, velocity.x);
 
             if (swipe < -swipeConfidenceThreshold) {
@@ -52,6 +61,22 @@ function ImageSlider({ images, title, isPortrait = false }: { images: string[]; 
           draggable="false"
         />
       </AnimatePresence>
+
+      {/* Desktop Arrows */}
+      <div className="absolute inset-0 hidden md:flex items-center justify-between px-4 opacity-0 group-hover/slider:opacity-100 transition-opacity z-20">
+        <button
+          onClick={(e) => { e.stopPropagation(); prev(); }}
+          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 flex items-center justify-center text-slate-900 hover:bg-sky-500 hover:text-white transition-all shadow-lg"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); next(); }}
+          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 flex items-center justify-center text-slate-900 hover:bg-sky-500 hover:text-white transition-all shadow-lg"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      </div>
 
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 pointer-events-none">
         {images.map((_, i) => (
