@@ -72,7 +72,7 @@ export default function Home() {
       <div className="noise" />
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-[100] px-8 py-8 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-slate-100">
+      <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-6 md:px-8 md:py-8 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-slate-100">
         <button
           onClick={scrollToTop}
           className="text-lg font-black tracking-widest text-slate-900 uppercase cursor-pointer outline-none hover:text-sky-500 transition-colors"

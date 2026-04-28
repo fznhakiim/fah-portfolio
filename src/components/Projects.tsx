@@ -2,54 +2,58 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/portfolio";
-import { ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { FaGithub, FaArrowRight, FaFigma } from "react-icons/fa6";
 import { useRef, useState } from "react";
 
 function ImageSlider({ images, title, isPortrait = false }: { images: string[]; title: string, isPortrait?: boolean }) {
   const [index, setIndex] = useState(0);
 
-  const next = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const next = () => {
     setIndex((prev) => (prev + 1) % images.length);
   };
 
-  const prev = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const prev = () => {
     setIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
+
   return (
-    <div className={`relative w-full h-full group/slider overflow-hidden ${isPortrait ? 'bg-slate-50' : ''}`}>
-      <AnimatePresence mode="wait">
+    <div className={`relative w-full h-full group/slider overflow-hidden cursor-grab active:cursor-grabbing ${isPortrait ? 'bg-slate-50' : ''}`}>
+      <AnimatePresence mode="wait" initial={false}>
         <motion.img
           key={index}
           src={images[index]}
           alt={title}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className={`w-full h-full ${isPortrait ? 'object-contain' : 'object-cover'} transition-all duration-700`}
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.2 }
+          }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={1}
+          onDragEnd={(e, { offset, velocity }) => {
+            const swipe = swipePower(offset.x, velocity.x);
+
+            if (swipe < -swipeConfidenceThreshold) {
+              next();
+            } else if (swipe > swipeConfidenceThreshold) {
+              prev();
+            }
+          }}
+          className={`w-full h-full ${isPortrait ? 'object-contain' : 'object-cover'} select-none`}
+          draggable="false"
         />
       </AnimatePresence>
 
-      <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover/slider:opacity-100 transition-opacity z-20">
-        <button
-          onClick={prev}
-          className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 flex items-center justify-center text-slate-900 hover:bg-sky-500 hover:text-white transition-all shadow-sm"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          onClick={next}
-          className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 flex items-center justify-center text-slate-900 hover:bg-sky-500 hover:text-white transition-all shadow-sm"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
-
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 pointer-events-none">
         {images.map((_, i) => (
           <div
             key={i}

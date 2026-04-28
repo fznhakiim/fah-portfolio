@@ -81,7 +81,7 @@ export default function Hero() {
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex flex-col justify-center items-center px-6 bg-white grid-pattern">
+    <section ref={containerRef} className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-20 md:pt-0 bg-white grid-pattern">
       {/* Decorative Background Elements */}
       <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-sky-50 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-50/50 blur-[100px] rounded-full" />
