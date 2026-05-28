@@ -2,6 +2,23 @@
 
 import { motion } from "framer-motion";
 import { skillCategories } from "@/data/portfolio";
+import { FaReact, FaJs, FaVuejs, FaHtml5, FaPython, FaLaravel } from "react-icons/fa6";
+import { SiNextdotjs, SiTailwindcss, SiFastapi, SiFirebase, SiPostman, SiMysql } from "react-icons/si";
+
+const skillIconMap: Record<string, React.ComponentType<any>> = {
+  react: FaReact,
+  nextjs: SiNextdotjs,
+  javascript: FaJs,
+  tailwindcss: SiTailwindcss,
+  vuejs: FaVuejs,
+  html5: FaHtml5,
+  python: FaPython,
+  fastapi: SiFastapi,
+  laravel: FaLaravel,
+  firebase: SiFirebase,
+  postman: SiPostman,
+  mysql: SiMysql,
+};
 
 export default function Skills() {
   return (
@@ -25,6 +42,8 @@ export default function Skills() {
                 const isLarge = (i + catIdx) % 7 === 0;
                 const isWide = (i + catIdx) % 5 === 0;
                 
+                const IconComponent = skillIconMap[skill.icon];
+
                 return (
                   <motion.div
                     key={`${catIdx}-${i}`}
@@ -41,17 +60,12 @@ export default function Skills() {
                     </div>
 
                     <div className="h-full flex flex-col justify-between relative z-10">
-                      {skill.icon && (
-                        <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-white shadow-sm border-2 border-slate-100 group-hover:scale-110 group-hover:rotate-6 group-hover:border-sky-500/30 transition-all duration-500">
-                          <img
-                            src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${skill.icon}/${skill.icon}-original.svg`}
-                            alt={skill.name}
-                            className="w-8 h-8 md:w-10 md:h-10 grayscale group-hover:grayscale-0 transition-all duration-700"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
+                      {IconComponent ? (
+                        <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-white shadow-sm border-2 border-slate-100 group-hover:scale-110 group-hover:rotate-6 group-hover:border-sky-500/30 transition-all duration-500 text-slate-400 group-hover:text-sky-500">
+                          <IconComponent className="w-8 h-8 md:w-10 md:h-10 transition-colors duration-500" />
                         </div>
+                      ) : (
+                        <div className="w-12 h-12 md:w-16 md:h-16" />
                       )}
                       
                       <div>

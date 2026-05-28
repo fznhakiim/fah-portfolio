@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
 import { stats } from "@/data/portfolio";
 import { useRef } from "react";
+import { scrollToId } from "@/utils/scroll";
 
 function MagneticButton({ children, className, primary = false, onClick }: any) {
   const ref = useRef<HTMLButtonElement>(null);
@@ -50,35 +51,6 @@ export default function Hero() {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
-
-  const manualScroll = (targetId: string) => {
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    const offset = 120;
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    const duration = 1000;
-    let start: number | null = null;
-
-    const animation = (currentTime: number) => {
-      if (start === null) start = currentTime;
-      const timeElapsed = currentTime - start;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
-    };
-
-    const ease = (t: number, b: number, c: number, d: number) => {
-      t /= d / 2;
-      if (t < 1) return (c / 2) * t * t + b;
-      t--;
-      return (-c / 2) * (t * (t - 2) - 1) + b;
-    };
-
-    requestAnimationFrame(animation);
-  };
 
   return (
     <section ref={containerRef} className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-20 md:pt-0 bg-white grid-pattern">
@@ -143,13 +115,13 @@ export default function Hero() {
           >
             <MagneticButton 
               primary 
-              onClick={() => manualScroll("work")}
+              onClick={() => scrollToId("work")}
               className="px-14 py-6 bg-sky-500 text-white font-black text-[10px] uppercase tracking-widest rounded-full shadow-lg shadow-sky-500/20 hover:scale-105 transition-transform"
             >
               The Portfolio
             </MagneticButton>
             <MagneticButton 
-              onClick={() => manualScroll("contact")}
+              onClick={() => scrollToId("contact")}
               className="px-14 py-6 bg-white border border-slate-200 text-slate-900 font-black text-[10px] uppercase tracking-widest rounded-full hover:bg-slate-50 transition-colors shadow-sm"
             >
               Let's Connect

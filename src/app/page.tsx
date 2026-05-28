@@ -10,6 +10,7 @@ import { socials } from "@/data/portfolio";
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa6";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { scrollTo, scrollToId } from "@/utils/scroll";
 
 const iconMap: any = {
   github: FaGithub,
@@ -25,39 +26,6 @@ export default function Home() {
   useEffect(() => {
     setYear(new Date().getFullYear());
   }, []);
-
-  // Manual Robust Smooth Scroll
-  const scrollTo = (targetPosition: number) => {
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    const duration = 1000;
-    let start: number | null = null;
-
-    const animation = (currentTime: number) => {
-      if (start === null) start = currentTime;
-      const timeElapsed = currentTime - start;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
-    };
-
-    const ease = (t: number, b: number, c: number, d: number) => {
-      t /= d / 2;
-      if (t < 1) return (c / 2) * t * t + b;
-      t--;
-      return (-c / 2) * (t * (t - 2) - 1) + b;
-    };
-
-    requestAnimationFrame(animation);
-  };
-
-  const scrollToId = (id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
-    const offset = 120;
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-    scrollTo(targetPosition);
-  };
 
   const scrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();

@@ -5,6 +5,9 @@ import { projects } from "@/data/portfolio";
 import { ChevronLeft, ChevronRight, Lock } from "lucide-react";
 import { FaGithub, FaArrowRight, FaFigma } from "react-icons/fa6";
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
+
+const MotionImage = motion(Image);
 
 function ImageSlider({ images, title, isPortrait = false }: { images: string[]; title: string, isPortrait?: boolean }) {
   const [index, setIndex] = useState(0);
@@ -33,10 +36,13 @@ function ImageSlider({ images, title, isPortrait = false }: { images: string[]; 
   return (
     <div className={`relative w-full h-full group/slider overflow-hidden ${isMobile ? 'cursor-grab active:cursor-grabbing' : ''} ${isPortrait ? 'bg-slate-50' : ''}`}>
       <AnimatePresence mode="wait" initial={false}>
-        <motion.img
+        <MotionImage
           key={index}
           src={images[index]}
           alt={title}
+          fill
+          priority={index === 0}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 50vw"
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -100 }}
@@ -92,7 +98,8 @@ function ImageSlider({ images, title, isPortrait = false }: { images: string[]; 
 
 function ProjectItem({ project, index }: { project: any; index: number }) {
   const ref = useRef(null);
-  const isPortrait = project.tags.includes('Figma') || project.tags.includes('UI/UX');
+  const isPortrait = project.tags.includes('Figma') || project.tags.includes('UI/UX') || project.tags.includes('Mobile Design');
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
@@ -130,7 +137,7 @@ function ProjectItem({ project, index }: { project: any; index: number }) {
               <a
                 href={project.githubUrl}
                 target="_blank"
-                className="flex items-center gap-3 px-6 py-3 rounded-full bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-sky-500 transition-all shadow-lg shadow-slate-900/10"
+                className="flex items-center gap-3 px-6 py-3 rounded-full bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-sky-500 transition-all shadow-lg shadow-slate-900/10 cursor-pointer outline-none"
               >
                 {project.githubUrl.includes('figma.com') ? (
                   <>
@@ -149,15 +156,68 @@ function ProjectItem({ project, index }: { project: any; index: number }) {
               <a
                 href={project.liveUrl}
                 target="_blank"
-                className="flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-900 text-[10px] font-black uppercase tracking-widest hover:border-sky-500 hover:text-sky-600 transition-all shadow-sm"
+                className="flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-900 text-[10px] font-black uppercase tracking-widest hover:border-sky-500 hover:text-sky-600 transition-all shadow-sm cursor-pointer outline-none"
               >
                 <FaArrowRight className="w-3 h-3" />
                 Live Demo
               </a>
             )}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-3 px-6 py-3 rounded-full bg-sky-50 border border-sky-100 text-sky-600 text-[10px] font-black uppercase tracking-widest hover:bg-sky-500 hover:text-white transition-all shadow-sm cursor-pointer outline-none"
+            >
+              {isOpen ? 'Hide Process' : 'View Development Process'}
+            </button>
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border border-slate-200 bg-slate-50/50 rounded-[2.5rem] p-8 md:p-12 max-w-5xl"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+              {/* Left Column: Context & Reasoning */}
+              <div className="lg:col-span-7 space-y-8">
+                <div>
+                  <h4 className="text-[10px] font-black text-sky-500 uppercase tracking-[0.3em] mb-3">Context & Problem</h4>
+                  <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">{project.problemContext}</p>
+                </div>
+                <div>
+                  <h4 className="text-[10px] font-black text-sky-500 uppercase tracking-[0.3em] mb-3">Technical Architecture & Decisions</h4>
+                  <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">{project.techReasoning}</p>
+                </div>
+              </div>
+
+              {/* Right Column: Role & Key Contributions */}
+              <div className="lg:col-span-5 space-y-8">
+                <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">My Role</span>
+                  <span className="text-base font-black text-slate-900 uppercase tracking-tight block">{project.myRole}</span>
+                  <span className="text-[9px] font-bold text-sky-500 uppercase tracking-widest block mt-2">{project.projectType}</span>
+                </div>
+
+                <div>
+                  <h4 className="text-[10px] font-black text-sky-500 uppercase tracking-[0.3em] mb-4">Key Technical Contributions</h4>
+                  <ul className="space-y-3">
+                    {project.myContributions.map((contribution: string, idx: number) => (
+                      <li key={idx} className="flex gap-3 text-slate-600 text-sm leading-relaxed font-medium">
+                        <span className="text-sky-500 font-black">•</span>
+                        <span>{contribution}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="group relative">
         <div className={`relative overflow-hidden rounded-[2.5rem] bg-slate-50 border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-[0_0_60px_-15px_rgba(14,165,233,0.5)] transition-all duration-500 ${isPortrait ? 'aspect-[4/5] max-w-lg' : 'aspect-[16/9] max-w-5xl'}`}>
@@ -169,21 +229,66 @@ function ProjectItem({ project, index }: { project: any; index: number }) {
 }
 
 export default function Projects() {
+  const categories = [
+    { id: 'all', label: 'All Projects' },
+    { id: 'fullstack', label: 'Full-stack' },
+    { id: 'frontend', label: 'Frontend' },
+    { id: 'backend-systems', label: 'Backend & Systems' },
+    { id: 'uiux-mobile', label: 'UI/UX & Mobile' },
+    { id: 'ai-data', label: 'AI & Data' },
+  ];
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const filteredProjects = activeCategory === 'all' 
+    ? projects 
+    : projects.filter(project => project.category === activeCategory);
+
   return (
     <section id="work" className="py-32 px-6 bg-white">
       <div className="container max-w-7xl mx-auto">
-        <div className="mb-24 space-y-4">
+        <div className="mb-16 space-y-4">
           <span className="text-sky-500 font-black text-xs uppercase tracking-[0.5em]">Portfolio Highlights</span>
           <h2 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-[0.8] text-slate-900">
             Selected <br /> <span className="text-slate-300 opacity-60">Works.</span>
           </h2>
         </div>
 
-        <div className="space-y-40">
-          {projects.map((project, i) => (
-            <ProjectItem key={project.id} project={project} index={i} />
+        {/* Filters */}
+        <div className="flex flex-wrap gap-3 mb-24 border-b border-slate-100 pb-8">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 cursor-pointer outline-none ${
+                activeCategory === cat.id
+                  ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20'
+                  : 'bg-slate-50 border border-slate-200 text-slate-500 hover:border-sky-500 hover:text-sky-500'
+              }`}
+            >
+              {cat.label}
+            </button>
           ))}
         </div>
+
+        <motion.div 
+          layout
+          className="space-y-40"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, i) => (
+              <motion.div
+                key={project.id}
+                layout
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.5 }}
+              >
+                <ProjectItem project={project} index={i} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );
